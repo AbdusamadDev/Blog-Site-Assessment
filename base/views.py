@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
 
-# Create your views here.
+from .models import Blog
+
+class BlogsDetailView(DetailView):
+    model = Blog
+    template_name = "test.html"
