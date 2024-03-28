@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details</title>
+</head>
+
+<body>
+    <h1>Blog Details</h1>
+    <ul>
+        <li><strong>Title:</strong> {{ blog.title }}</li>
+        <li><strong>User:</strong> {{ blog.user.username }}</li>
+        <li><strong>Document:</strong> <img src="{{ blog.document.url }}"></li>
+        <li><strong>View Count:</strong> {{ blog.view_count }}</li>
+        <li><strong>Date Created:</strong> {{ blog.date_created }}</li>
+    </ul>
+</body>
+
+</html>
