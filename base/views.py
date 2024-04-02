@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     TemplateView,
@@ -16,7 +17,7 @@ class BlogsDetailView(DetailView):
     template_name = "blog-detail.html"
 
 
-class BlogsCreateView(CreateView):
+class BlogsCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     template_name = "blog-create.html"
     form_class = BlogsForm
@@ -44,3 +45,6 @@ class BlogsListView(ListView):
     template_name = "blog-list.html"
     paginate_by = 8
     model = Blog
+
+
+
