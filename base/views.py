@@ -1,4 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest, HttpResponse
+from django.db.models.base import Model as Model
+from django.forms import BaseModelForm
 from django.urls import reverse_lazy
 from django.views.generic import (
     TemplateView,
@@ -7,6 +11,7 @@ from django.views.generic import (
     ListView,
 )
 
+from datetime import datetime
 
 from .forms import BlogsForm
 from .models import Blog
@@ -16,12 +21,27 @@ class BlogsDetailView(DetailView):
     model = Blog
     template_name = "blog-detail.html"
 
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        response = super().get(request, *args, **kwargs)
+        blog = self.get_object()
+        current_time = datetime.now()
+        date_incremented = blog.increment_date
+        till_when = current_time.timestamp() - date_incremented
+        if till_when > 120:  # 120 = 2(60 seconds) -> 2 minutes
+            blog.view_count += 1
+            blog.increment_date = current_time.timestamp()
+            blog.save()
+        return response
+
 
 class BlogsCreateView(LoginRequiredMixin, CreateView):
-    model = Blog
     template_name = "blog-create.html"
     form_class = BlogsForm
     success_url = reverse_lazy("home")
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class HomeView(TemplateView):
@@ -41,10 +61,18 @@ class HomeView(TemplateView):
         return context
 
 
-class BlogsListView(ListView):
+class BlogsListView(LoginRequiredMixin, ListView):
     template_name = "blog-list.html"
     paginate_by = 8
     model = Blog
+    queryset = (
+        Blog.objects.all().filter(status="approved").order_by("-date_created")
+    )  # First return all approved-by-admin blogs and return the latest news
 
 
-
+@login_required
+def hit_like_to_blog(request, pk):
+    blog = Blog.objects.get(pk=pk)
+    blog.like_count += 1
+    blog.save()
+    return HttpResponse(str(pk))
