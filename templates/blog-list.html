@@ -1,17 +1,17 @@
 {% for blog in page_obj %}
     <div class="blog-item">
         {{ blog.title }}<br><br>
-        <img src="{{ blog.document.url }}"><br>
-        {{ blog.body|safe }}<br>
-        {{ blog.view_count }}<br>
+        <div class="image-container">
+            <img src="{{ blog.document.url }}">
+        </div><br>
         {{ blog.date_created }}<br>
+        <a href="{% url 'blogs-detail' blog.pk %}">Read more >>></a>
         <hr>
     </div>
 {% empty %}
     <p>No blogs found.</p>
 {% endfor %}
 
-<!-- Pagination links -->
 <div class="pagination">
     {% if is_paginated %}
         {% if page_obj.has_previous %}

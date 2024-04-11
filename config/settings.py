@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "ckeditor",
     "base",
+    "comments",
     "authentication",
 ]
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+AUTH_USER_MODEL = "authentication.Account"
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",

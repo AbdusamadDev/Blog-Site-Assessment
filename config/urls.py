@@ -6,8 +6,9 @@ from django.conf import settings
 from base.views import HomeView
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("base/", include("base.urls")),
-    path("", HomeView.as_view(), name="home"),
     path("accounts/", include("authentication.urls")),
+    path("comments/", include("comments.urls")),
+    path("", HomeView.as_view(), name="home"),
+    path("base/", include("base.urls")),
+    path("admin/", admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

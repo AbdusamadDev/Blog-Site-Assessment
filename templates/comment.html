@@ -1,0 +1,42 @@
+<h1>{{ blog.title }}</h1>
+<p>{{ blog.body }}</p>
+
+<h2>Comments:</h2>
+<ul>
+    {% for comment in comments %}
+    <li>
+        {{ comment.text }} - by {{ comment.user.username }}
+        <button class="reply-btn" data-comment-id="{{ comment.id }}">Reply</button>
+        <ul class="reply-list">
+            {% for reply in comment.replies.all %}
+            <li>{{ reply.text }} - by {{ reply.user.username }}</li>
+            {% endfor %}
+        </ul>
+        <form class="reply-form" method="post" action="{% url 'comment' blog_id=blog.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="parent_comment" value="{{ comment.id }}">
+            <input type="text" name="text">
+            <button type="submit">Reply</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Add a Comment:</h2>
+<form method="post" action="{% url 'comment' blog_id=blog.id %}">
+    {% csrf_token %}
+    <input type="text" name="text">
+    <button type="submit">Comment</button>
+</form>
+
+<script>
+    document.querySelectorAll('.reply-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.reply-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            const replyForm = btn.nextElementSibling.nextElementSibling;
+            replyForm.style.display = 'block';
+        });
+    });
+</script>
