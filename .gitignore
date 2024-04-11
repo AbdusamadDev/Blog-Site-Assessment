@@ -1,8 +1,8 @@
-./venv
-./staticfiles
-./base/migrations
-./comments/migrations
-./authentication/migrations
-./authentication/__pycache__
-./base/__pycache__
-./comments/__pycache__
+venv
+staticfiles
+base/migrations
+comments/migrations
+authentication/migrations
+authentication/__pycache__
+base/__pycache__
+comments/__pycache__
