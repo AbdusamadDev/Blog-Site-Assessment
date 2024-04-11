@@ -14,8 +14,59 @@
         <li><strong>Document:</strong> <img src="{{ blog.document.url }}"></li>
         <li>{{ blog.body|safe }}</li>
         <li><strong>View Count:</strong> {{ blog.view_count }}</li>
+        <li><strong>Like Count:</strong> {{ blog.like_count }}</li>
         <li><strong>Date Created:</strong> {{ blog.date_created }}</li>
+        <form method="post" action="{% url 'like' blog.pk %}">
+            {% csrf_token %}
+            <button type="submit">Like</button>
+        </form>
     </ul>
+
+    <div class="comments-container">
+        <h2>Comments:</h2>
+        <ul class="comments-list">
+            {% for comment in comments %}
+            <li>
+                <div class="comment">
+                    <p>{{ comment.text }} - by {{ comment.user.username }}</p>
+                    <button class="reply-btn" data-comment-id="{{ comment.id }}">Reply</button>
+                    <ul class="reply-list">
+                        {% for reply in comment.replies.all %}
+                        <li>{{ reply.text }} - by {{ reply.user.username }}</li>
+                        {% endfor %}
+                    </ul>
+                    <form class="reply-form" method="post" action="{% url 'comment' blog_id=blog.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="parent_comment" value="{{ comment.id }}">
+                        <input type="text" name="text">
+                        <button type="submit">Reply</button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="add-comment-container">
+        <h2>Add a Comment:</h2>
+        <form method="post" action="{% url 'comment' blog_id=blog.id %}">
+            {% csrf_token %}
+            <input type="text" name="text">
+            <button type="submit">Comment</button>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('.reply-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.reply-form').forEach(form => {
+                    form.style.display = 'none';
+                });
+                const replyForm = btn.nextElementSibling.nextElementSibling;
+                replyForm.style.display = 'block';
+            });
+        });
+    </script>
 </body>
 
 </html>

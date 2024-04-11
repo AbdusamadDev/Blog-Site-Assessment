@@ -1,8 +1,7 @@
-from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from django.db import models
 
-from datetime import datetime
+from authentication.models import Account
 
 
 class Blog(models.Model):
@@ -12,7 +11,7 @@ class Blog(models.Model):
         ("rejected", "Rejected"),
     )
     title = models.CharField(max_length=100)
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=Account, on_delete=models.CASCADE)
     document = models.FileField(upload_to="docs/")
     body = RichTextField(max_length=7000)
     view_count = models.BigIntegerField(default=0)
@@ -20,3 +19,6 @@ class Blog(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
     increment_date = models.BigIntegerField(default=1)
     like_count = models.BigIntegerField(default=0)
+
+
+
