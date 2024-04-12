@@ -12,8 +12,11 @@ class Blog(models.Model):
     )
     title = models.CharField(max_length=100)
     user = models.ForeignKey(to=Account, on_delete=models.CASCADE)
+    description = models.CharField(
+        max_length=300, default="no description", null=False, blank=False, unique=False
+    )
     document = models.FileField(upload_to="docs/")
-    body = RichTextField(max_length=7000)
+    body = RichTextField(max_length=35000)
     view_count = models.BigIntegerField(default=0)
     date_created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")

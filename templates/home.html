@@ -5,7 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        .blog-item {
+            background-color: #d7d6d6;
+            border-radius: 10px;
+            /* Adjust the border radius as needed */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Adjust the shadow properties as needed */
+            transition: box-shadow 0.3s ease;
+            /* Optional: Add transition effect for smoother shadow changes */
+        }
+
+        .blog-item:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+            /* Adjust shadow on hover as needed */
+        }
+
         .image-container {
             max-width: 100%;
             /* Maximum width of the container */
@@ -25,12 +42,106 @@
             display: block;
             /* Ensure the image doesn't overflow horizontally */
         }
+
+        /* Custom styles for navbar and footer */
+        nav.navbar {
+            background-color: #343a40; /* Dark color for the navbar */
+        }
+
+        footer.footer {
+            background-color: #343a40; /* Dark color for the footer */
+            color: #fff; /* Text color for the footer */
+        }
     </style>
 </head>
 
 <body>
-    <h1>Welcome to My Homepage</h1>
-    {% include 'blog-list.html' with object_list=object_list is_paginated=is_paginated page_obj=page_obj %}
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Your Logo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="container mt-5">
+        {% include 'blog-list.html' with object_list=object_list is_paginated=is_paginated page_obj=page_obj %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center text-lg-left">
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Footer Content</h5>
+                    <p>
+                        Here you can use rows and columns to organize your footer content.
+                    </p>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="#!" class="text-light">Link 1</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="text-light">Link 2</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="text-light">Link 3</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="text-light">Link 4</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase">Links</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li>
+                            <a href="#!" class="text-light">Link 1</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="text-light">Link 2</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="text-light">Link 3</a>
+                        </li>
+                        <li>
+                            <a href="#!" class="text-light">Link 4</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2024 YourWebsite.com
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

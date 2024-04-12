@@ -1,35 +1,37 @@
 {% for blog in page_obj %}
-    <div class="blog-item">
-        {{ blog.title }}<br><br>
+    <div class="container blog-item">
+        <h3>{{ blog.title }}</h3>
+        <h6>{{ blog.description }}</h6>
         <div class="image-container">
-            <img src="{{ blog.document.url }}">
-        </div><br>
-        {{ blog.date_created }}<br>
-        <a href="{% url 'blogs-detail' blog.pk %}">Read more >>></a>
-        <hr>
+            <img src="{{ blog.document.url }}" class="img-fluid">
+        </div>
+        <p>{{ blog.date_created }}</p>
+        <a href="{% url 'blogs-detail' blog.pk %}" class="btn btn-primary">Read more &raquo;</a>
     </div>
+    <br>
 {% empty %}
     <p>No blogs found.</p>
 {% endfor %}
 
-<div class="pagination">
+<div class="pagination justify-content-center">
     {% if is_paginated %}
         {% if page_obj.has_previous %}
-            <a href="?page=1">First</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            <a href="?page=1" class="btn btn-primary">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary">Previous</a>
         {% endif %}
         
         {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
-                <span class="current">{{ num }}</span>
+                <a href="?page={{ num }}" class="btn btn-primary active">{{ num }}</a>
             {% else %}
-                <a href="?page={{ num }}">{{ num }}</a>
+                <a href="?page={{ num }}" class="btn btn-primary">{{ num }}</a>
             {% endif %}
         {% endfor %}
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-primary">Last</a>
         {% endif %}
     {% endif %}
 </div>
+
