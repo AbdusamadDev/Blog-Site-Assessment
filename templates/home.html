@@ -9,50 +9,207 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .blog-item {
-            background-color: #d7d6d6;
+            filter: brightness(0.5);
+            background-color: #333;
+            /* Initial dark background color */
             border-radius: 10px;
-            /* Adjust the border radius as needed */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            /* Adjust the shadow properties as needed */
-            transition: box-shadow 0.3s ease;
-            /* Optional: Add transition effect for smoother shadow changes */
+            transition: background-color 0.3s ease;
+            /* Transition for background color change */
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            margin-bottom: 20px;
         }
 
-        .blog-item:hover {
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-            /* Adjust shadow on hover as needed */
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .blog-item .bio-container h3,
+        .blog-item .bio-container h6,
+        .blog-item .bio-container p {
+            position: relative;
+            z-index: 1;
+            color: white;
+            /* Text color set to white */
+        }
+
+        .blog-item a {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            color: white;
+            text-decoration: none;
+        }
+
+        .bio-container {
+            margin: 20px;
+            max-width: 500px;
+        }
+
+        .pagination a {
+            margin-right: 5px;
         }
 
         .image-container {
             max-width: 100%;
-            /* Maximum width of the container */
             max-height: 400px;
-            /* Maximum height of the container, adjust as needed */
             overflow: hidden;
-            /* Hide any overflow */
             display: inline-block;
-            /* Allow the container to wrap around the image */
+            position: relative;
         }
 
         .image-container img {
             max-width: 100%;
-            /* Maximum width of the image */
             height: auto;
-            /* Maintain aspect ratio */
             display: block;
-            /* Ensure the image doesn't overflow horizontally */
+            transition: filter 0.3s ease;
         }
 
-        /* Custom styles for navbar and footer */
         nav.navbar {
-            background-color: #343a40; /* Dark color for the navbar */
+            background-color: #343a40;
         }
 
         footer.footer {
-            background-color: #343a40; /* Dark color for the footer */
-            color: #fff; /* Text color for the footer */
+            background-color: #343a40;
+            color: #fff;
+        }
+
+        :root {
+            --surface-color: #fff;
+            --curve: 40;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .blog-list-container {
+            font-family: 'Noto Sans JP', sans-serif;
+            margin: 5%;
+            /* border-radius: calc(var(--curve) * 1px); */
+            margin-top: -80px;
+            background-color: #7d7c7c;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 5rem 5vw;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .card {
+            margin-top: 50px;
+            position: relative;
+            display: block;
+            height: 100%;
+            border-radius: calc(var(--curve) * 1px);
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .card__image {
+            width: 100%;
+            height: auto;
+        }
+
+        .card__overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1;
+            border-radius: calc(var(--curve) * 1px);
+            background-color: var(--surface-color);
+            transform: translateY(100%);
+            transition: .2s ease-in-out;
+        }
+
+        .card:hover .card__overlay {
+            transform: translateY(0);
+        }
+
+        .card__header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 2em;
+            padding: 2em;
+            border-radius: calc(var(--curve) * 1px) 0 0 0;
+            background-color: var(--surface-color);
+            transform: translateY(-100%);
+            transition: .2s ease-in-out;
+        }
+
+        .card__arc {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            z-index: 1;
+        }
+
+        .card__arc path {
+            fill: var(--surface-color);
+            d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
+        }
+
+        .card:hover .card__header {
+            transform: translateY(0);
+        }
+
+        .card__thumb {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .card__title {
+            font-size: 1em;
+            margin: 0 0 .3em;
+            color: #6A515E;
+        }
+
+        .card__tagline {
+            display: block;
+            margin: 1em 0;
+            font-family: "MockFlowFont";
+            font-size: .8em;
+            color: #D7BDCA;
+        }
+
+        .card__status {
+            font-size: .8em;
+            color: #D7BDCA;
+        }
+
+        .card__description {
+            padding: 0 2em 2em;
+            margin: 0;
+            color: #D7BDCA;
+            font-family: "MockFlowFont";
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
         }
     </style>
+
 </head>
 
 <body>
@@ -80,7 +237,7 @@
     </nav>
     <!-- End Navbar -->
 
-    <div class="container mt-5">
+    <div class="blog-list-container">
         {% include 'blog-list.html' with object_list=object_list is_paginated=is_paginated page_obj=page_obj %}
     </div>
 

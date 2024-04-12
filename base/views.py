@@ -83,7 +83,7 @@ class HomeView(TemplateView):
 
 class BlogsListView(LoginRequiredMixin, ListView):
     template_name = "blog-list.html"
-    paginate_by = 3
+    paginate_by = 8
     model = Blog
     queryset = (
         Blog.objects.all().filter(status="approved").order_by("-date_created")
