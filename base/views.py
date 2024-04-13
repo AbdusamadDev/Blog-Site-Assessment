@@ -29,7 +29,7 @@ class BlogsDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         blog = self.get_object()
-        comments = Comment.objects.filter(blog=blog, parent_comment=None).order_by(
+        comments = Comment.objects.filter(blog=blog).order_by(
             "-created_at"
         )  # Fetch top-level comments related to the blog and order them by created_at
         paginator = Paginator(comments, self.paginate_by)
@@ -83,7 +83,7 @@ class HomeView(TemplateView):
 
 class BlogsListView(LoginRequiredMixin, ListView):
     template_name = "blog-list.html"
-    paginate_by = 8
+    paginate_by = 10
     model = Blog
     queryset = (
         Blog.objects.all().filter(status="approved").order_by("-date_created")
@@ -107,3 +107,5 @@ def hit_like_to_blog(request, pk):
 
     # Redirect back to the previous page
     return previous_page
+
+# {% include 'blog-list.html' with object_list=object_list is_paginated=is_paginated page_obj=page_obj %}

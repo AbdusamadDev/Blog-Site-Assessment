@@ -1,3 +1,6 @@
+{% extends 'home.html' %}
+
+{% block content %}
 <ul class="cards">
     {% for blog in page_obj %}
       <li>
@@ -42,4 +45,5 @@
           {% endif %}
       {% endif %}
   </div>
+{% endblock %}
   
