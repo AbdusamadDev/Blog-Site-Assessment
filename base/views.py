@@ -1,6 +1,6 @@
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.db.models.base import Model as Model
 from django.core.paginator import Paginator
@@ -108,4 +108,13 @@ def hit_like_to_blog(request, pk):
     # Redirect back to the previous page
     return previous_page
 
+
 # {% include 'blog-list.html' with object_list=object_list is_paginated=is_paginated page_obj=page_obj %}
+
+
+def v2_template_view(request):
+    return render(
+        request,
+        "v2/blog-detail.html",
+        {"request": request, "object_list": Blog.objects.all().first()},
+    )

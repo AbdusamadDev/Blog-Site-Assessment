@@ -267,6 +267,7 @@ nav.navbar {
 
 .card:hover .card__overlay {
     transform: translateY(0);
+
 }
 
 .card__header {
@@ -294,6 +295,16 @@ nav.navbar {
     d: path("M 40 80 c 22 0 40 -22 40 -40 v 40 Z");
 }
 
+.detail-card {
+    background-color: white;
+    margin-top: 50px;
+    padding: 20px
+}
+
+.custom-nav-link {
+    padding: 20px;
+}
+
 .card:hover .card__header {
     transform: translateY(0);
 }
@@ -311,6 +322,9 @@ nav.navbar {
     color: #6A515E;
 }
 
+.navbar-regulate {
+    margin-top: 15px;
+}
 .card__tagline {
     display: block;
     margin: 1em 0;
@@ -318,7 +332,9 @@ nav.navbar {
     font-size: .8em;
     color: #D7BDCA;
 }
-
+.content-center {
+    margin: 10px;
+}
 .card__status {
     font-size: .8em;
     color: #D7BDCA;
@@ -329,6 +345,9 @@ nav.navbar {
     margin-bottom: 25px;
 }
 
+.right-navbar {
+    right: 100%;
+}
 .card__description {
     padding: 0 2em 2em;
     margin: 0;
@@ -349,7 +368,7 @@ body {
 /* Create two unequal columns that floats next to each other */
 /* Left column */
 .leftcolumn {
-    margin-top: 50px;
+    margin-top: 60px;
     margin-left: 20px;
     float: left;
     width: 75%;
@@ -372,7 +391,6 @@ body {
 /* Add a card effect for articles */
 .card {
     background-color: white;
-    padding: 20px;
     margin-top: 20px;
 }
 
